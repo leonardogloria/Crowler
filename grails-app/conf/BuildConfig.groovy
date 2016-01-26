@@ -44,6 +44,10 @@ grails.project.dependency.resolution = {
         mavenRepo "http://repository.codehaus.org"
         //mavenRepo "http://download.java.net/maven/2/"
         //mavenRepo "http://repository.jboss.com/maven2/"
+
+
+
+
     }
 
     dependencies {
@@ -62,7 +66,8 @@ grails.project.dependency.resolution = {
         compile ':cache:1.1.8'
         // asset-pipeline 2.0+ requires Java 7, use version 1.9.x with Java 6
         compile ":asset-pipeline:2.2.3"
-        compile ":rest-client-builder:2.0.0"
+
+
 
 
         // plugins needed at runtime but not for compilation
