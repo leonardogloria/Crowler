@@ -1,6 +1,9 @@
 package crowler
 
-
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
+import org.jsoup.nodes.Element
+import teste.HttpGetter
 
 
 class ParserController {
@@ -8,7 +11,7 @@ class ParserController {
 
     def index() {
         def file = new File("/Users/leonardogloria/Documents/Projetos/output.txt")
-        def fileOutput = new File("/Users/leonardogloria/Documents/Projetos/output2.txt")
+        def fileOutput = new File("/Users/leonardogloria/Documents/Projetos/outputfinal.txt")
 
         file.eachLine {
             def line = it.split(" ")
@@ -17,13 +20,55 @@ class ParserController {
         }
 
     }
-    def sendGet(){
-        myJavaFunction.getHttpsRequest2()
-        println "teste"
+    def usingJsoup(){
+        def file = new File("/Users/leonardogloria/Documents/Projetos/outcurto.txt")
+        def fileOutput = new File("/Users/leonardogloria/Documents/Projetos/outputFabricantes.txt")
+
+        file.eachLine {
+
+            def stf=  myJavaFunction.getHttpsRequest2(it.toString())
+            Document document =  Jsoup.parse(stf.toString())
+
+            def elements= document.select("#container_content")
+            fileOutput << elements.text() + "\n"
+        }
+
+//
+//        def stf=  myJavaFunction.getHttpsRequest2("12069")
+//        Document document =  Jsoup.parse(stf.toString())
+//
+//        def elements= document.select("#container_content")
+//        println elements.text()
 
 
     }
+    def sendGet(){
+        HttpGetter getter = new HttpGetter();
+        def stringHtml = getter.getHttpsRequest2("12069")
+        //def stf=  myJavaFunction.getHttpsRequest2("12069")
+//        stf.replace("--", " ")
+//        println stf
+//        def sluper = new XmlSlurper()
+//        sluper.setFeature("http://apache.org/xml/features/disallow-doctype-decl",false)
+//        def htmlParser = sluper.parseText(stf.toString())
+//
+//        htmlParser.'**'.findAll{
+//            it.@class == 'head'}.each { println it}
+        def teste = new XmlSlurper().parseText(stringHtml.toString())
+        teste.setFeature("http://apache.org/xml/features/disallow-doctype-decl",false)
+
+        def elements = teste.body.findAll{
+            println it
+        }
+
+
+
+       }
+
+
+
     def getContent( ){
+
 
 
 

@@ -1,17 +1,16 @@
+package teste;
+
 import javax.net.ssl.*;
-import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.cert.X509Certificate;
 
 /**
- * Created by lsilva on 26/01/2016.
+ * Created by leonardogloria on 27/01/16.
  */
-public class HttpUtil {
-
+public class HttpGetter {
     private final String USER_AGENT = "Mozilla/5.0";
 
     public StringBuffer getHttpsRequest2(String idFabricante)throws  Exception{
@@ -41,7 +40,6 @@ public class HttpUtil {
         // Install the all-trusting host verifier
         HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
         String urlContruida = "https://consultaca.com/fabricantes/" + idFabricante + "/";
-        //System.out.println( urlContruida);
         URL url = new URL(urlContruida);
         URLConnection con = url.openConnection();
         Reader reader = new InputStreamReader(con.getInputStream());
@@ -59,7 +57,3 @@ public class HttpUtil {
 
 
 }
-
-
-
-
