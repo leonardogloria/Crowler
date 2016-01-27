@@ -10,8 +10,8 @@ class ParserController {
     def myJavaFunction
 
     def index() {
-        def file = new File("/Users/leonardogloria/Documents/Projetos/output.txt")
-        def fileOutput = new File("/Users/leonardogloria/Documents/Projetos/outputfinal.txt")
+        def file = new File("/Users/leonardogloria/Documents/Projetos/output4.txt")
+        def fileOutput = new File("/Users/leonardogloria/Documents/Projetos/outputfinal2.txt")
 
         file.eachLine {
             def line = it.split(" ")
@@ -20,16 +20,40 @@ class ParserController {
         }
 
     }
+    def parseFile(){
+        def file = new File("/consumidor/Fabricantes/output2_saida.txt")
+        def fileOut = new File("/consumidor/Fabricantes/saida.txt")
+        file.eachLine {
+            String newLine = ""
+            def splited = it.split(":")
+            if(splited.length == 8){
+                splited.eachWithIndex { iterador, index ->
+                    if(index == 2){
+                        newLine += "Nome Fantasia::" + iterador + ":"
+                    }else{
+                        newLine += iterador + ":"
+                    }
+
+                }
+            }else{
+                splited.each{
+                    newLine += it + ":"
+                }
+            }
+            fileOut << newLine + "\n"
+        }
+
+    }
     def usingJsoup(){
-        def file = new File("/Users/leonardogloria/Documents/Projetos/outcurto.txt")
-        def fileOutput = new File("/Users/leonardogloria/Documents/Projetos/outputFabricantes.txt")
+        def file = new File("/consumidor/Fabricantes/output2_1.txt")
+        def fileOutput =  new File("/consumidor/Fabricantes/output2_saida2.txt")
 
         file.eachLine {
 
             def stf=  myJavaFunction.getHttpsRequest2(it.toString())
             Document document =  Jsoup.parse(stf.toString())
 
-            def elements= document.select("#container_content")
+            def elements= document.select(".table-form")
             fileOutput << elements.text() + "\n"
         }
 
